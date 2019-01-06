@@ -41,11 +41,13 @@ foreach ($logfile as $line)
   {
     // Installed
     case preg_match("/^installed /", $line):
+    case preg_match("/^\[PACMAN\] installed /", $line):
     case preg_match("/^\[ALPM\] installed /", $line):
       $output[$outputKey]['installed']++;
       break;
 
     // Reinstalled
+    case preg_match("/^\[PACMAN\] reinstalled /", $line):
     case preg_match("/^\[ALPM\] reinstalled /", $line):
       $output[$outputKey]['reinstalled']++;
       break;
@@ -58,17 +60,20 @@ foreach ($logfile as $line)
 
     // Upgraded
     case preg_match("/^upgraded /", $line):
+    case preg_match("/^\[PACMAN\] upgraded /", $line):
     case preg_match("/^\[ALPM\] upgraded /", $line):
       $output[$outputKey]['upgraded']++;
       break;
 
     // Downgraded
+    case preg_match("/^\[PACMAN\] downgraded /", $line):
     case preg_match("/^\[ALPM\] downgraded /", $line):
       $output[$outputKey]['downgraded']++;
       break;
 
     // Removed
     case preg_match("/^removed /", $line):
+    case preg_match("/^\[PACMAN\] removed /", $line):
     case preg_match("/^\[ALPM\] removed /", $line):
       $output[$outputKey]['removed']++;
       break;
@@ -168,4 +173,19 @@ foreach ($logfile as $line)
   }
 }
 
-print_r($output);
+$header = true;
+
+foreach ($output as $year => $values)
+{
+  if ($header) {
+    echo "Year;";
+    echo implode(";",array_keys($values));
+    echo "\n";
+    $header = false;
+  }
+
+  echo "$year;";
+  echo implode(";",array_values($values));
+  echo "\n";
+}
+

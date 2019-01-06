@@ -1,0 +1,35 @@
+set terminal svg enhanced size 800,600 font "Sans,10"
+set output "pacman-stats.svg"
+set title "Pacman installed, reinstalled, downgraded and removed packages"
+set grid
+set grid
+set xlabel "Year"
+set ylabel "Count"
+
+set style line 1 \
+    linecolor rgb '#0072bd' \
+    linetype 1 linewidth 2 \
+    pointtype 1 pointsize 1
+set style line 2 \
+    linecolor rgb '#d95319' \
+    linetype 1 linewidth 2 \
+    pointtype 2 pointsize 1
+set style line 3 \
+    linecolor rgb '#edb120' \
+    linetype 1 linewidth 2 \
+    pointtype 3 pointsize 1
+set style line 4 \
+    linecolor rgb '#77ac30' \
+    linetype 1 linewidth 2 \
+    pointtype 4 pointsize 1
+set style line 5 \
+    linecolor rgb '#4dbeee' \
+    linetype 1 linewidth 2 \
+    pointtype 5 pointsize 1
+
+#''          index 2 title "Upgraded" with linespoints linestyle 3, \
+
+plot 'stats.csv' index 0 title "Installed" with linespoints linestyle 1, \
+     ''          index 1 title "Reinstalled" with linespoints linestyle 2, \
+     ''          index 3 title "Downgraded" with linespoints linestyle 4, \
+     ''          index 4 title "Removed" with linespoints linestyle 5
